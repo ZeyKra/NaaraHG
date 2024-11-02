@@ -1,7 +1,10 @@
 package fr.zeykra.naaraHG.commands.hungergame;
 
 import fr.zeykra.naaraHG.commands.SubCommand;
+import fr.zeykra.naaraHG.commands.hungergame.subcommands.SubCommandCreate;
 import fr.zeykra.naaraHG.commands.hungergame.subcommands.SubCommandDebug;
+import fr.zeykra.naaraHG.commands.hungergame.subcommands.SubCommandList;
+import fr.zeykra.naaraHG.commands.hungergame.subcommands.SubCommandManage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,8 +19,10 @@ public class CommandHungerGame implements CommandExecutor  {
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     public CommandHungerGame() {
-
         subCommands.add(new SubCommandDebug());
+        subCommands.add(new SubCommandCreate());
+        subCommands.add(new SubCommandList());
+        subCommands.add(new SubCommandManage());
     }
 
     @Override
