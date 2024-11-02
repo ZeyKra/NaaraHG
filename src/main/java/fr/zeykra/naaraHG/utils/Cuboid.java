@@ -1,4 +1,4 @@
-package fr.zeykra.naaraHG.util;
+package fr.zeykra.naaraHG.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

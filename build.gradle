@@ -47,3 +47,8 @@ processResources {
         expand props
     }
 }
+
+tasks.jar {
+    destinationDirectory = file('C:/Users/boobo/Documents/Minecraft/Mincraft server/Naraa/plugins')
+}
+

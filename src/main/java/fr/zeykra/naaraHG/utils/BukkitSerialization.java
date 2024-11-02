@@ -1,4 +1,4 @@
-package fr.zeykra.naaraHG.util;
+package fr.zeykra.naaraHG.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;

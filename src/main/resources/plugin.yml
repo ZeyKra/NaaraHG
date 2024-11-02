@@ -2,3 +2,12 @@ name: NaaraHG
 version: '1.0-TRAINING'
 main: fr.zeykra.naaraHG.NaaraHG
 api-version: '1.8.8'
+commands:
+  hungergame:
+    description: Commande principale du plugin NaaraHG
+    usage: /hungergame help
+    aliases: [hg, hungergames, naarahg, nhg]
+    permission: naarahg.command.hungergame
+    permission-message: Vous n'avez pas la permission d'utiliser cette commande
+
+

@@ -1,6 +1,7 @@
 package fr.zeykra.naaraHG;
 
-import fr.zeykra.naaraHG.listener.PlayerJoinListener;
+import fr.zeykra.naaraHG.commands.hungergame.CommandHungerGame;
+import fr.zeykra.naaraHG.listeners.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NaaraHG extends JavaPlugin {
@@ -12,7 +13,11 @@ public final class NaaraHG extends JavaPlugin {
         INSTANCE = this;
         getServer().broadcastMessage("§aLe plugin NaaraHG a bien été activé !");
 
+        //Chargement des listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        //Chargement des commandes
+        getCommand("hungergame").setExecutor(new CommandHungerGame());
     }
 
     @Override

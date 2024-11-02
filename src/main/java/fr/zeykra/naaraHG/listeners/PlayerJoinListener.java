@@ -1,4 +1,4 @@
-package fr.zeykra.naaraHG.listener;
+package fr.zeykra.naaraHG.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
