@@ -35,5 +35,6 @@ public class SubCommandCreate extends SubCommand {
 
         HGGame game = HGManager.createGame();
         player.sendMessage("§aPartie créée avec succès ! : " + game.getGameUUID());
+        game.startWait();
     }
 }
