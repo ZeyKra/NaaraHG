@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class HGManager {
 
+    // This is a map of UUIDs to HGGame objects
     private static Map<UUID, HGGame> games = new HashMap<>();
 
     public static Map<UUID, HGGame> getGames() {
@@ -27,5 +28,9 @@ public class HGManager {
         addGame(game.getGameUUID(), game);
 
         return game;
+    }
+
+    public static boolean doesGameExist(UUID uuid) {
+        return games.containsKey(uuid);
     }
 }

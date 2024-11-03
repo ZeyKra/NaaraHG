@@ -36,7 +36,6 @@ public class SubCommandManage extends SubCommand {
     public void perform(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         UUID gameUUID = UUID.fromString(args[1]);
-        System.out.println("arg0 :" + args[0]);
         player.sendMessage("§fOuais manage la partie : §e" + gameUUID);
     }
 

@@ -1,25 +1,36 @@
 package fr.zeykra.naaraHG.models;
 
+import fr.mrmicky.fastboard.FastBoard;
+import org.bukkit.entity.Player;
+
 import java.util.UUID;
 
 public class HGPlayer {
 
     private int kills;
     private int killstreak;
-    private UUID HGGameUUID;
+    private UUID CurrentHGGameUUID;
+    private FastBoard board;
+    private Player player;
 
-    HGPlayer(UUID HGGameUUID) {
+    public HGPlayer(Player player) {
         this.kills = 0;
         this.killstreak = 0;
-        this.HGGameUUID = HGGameUUID;
+        this.CurrentHGGameUUID = null;
+        this.player = player;
+        this.board = new FastBoard(player);
     }
 
-    public void setHGGameUUID(UUID HGGameUUID) {
-        this.HGGameUUID = HGGameUUID;
+    public void setCurrentHGGameUUID(UUID currentHGGameUUID) {
+        this.CurrentHGGameUUID = currentHGGameUUID;
     }
 
-    public UUID getHGGameUUID() {
-        return HGGameUUID;
+    public UUID getCurrentHGGameUUID() {
+        return CurrentHGGameUUID;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
 
