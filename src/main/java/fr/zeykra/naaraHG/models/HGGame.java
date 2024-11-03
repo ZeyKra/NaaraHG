@@ -64,13 +64,15 @@ public class HGGame {
         this.gameRunnable = new BukkitRunnable() {
             @Override
             public void run() {
+
+                updateScoreboard(HGScoreboardType.INGAME_SCOREBOARD);
                 if (getRemainingPlayers().size() <= 1) {
                     gamestate = Gamestate.FINISHED;
                     handleGameEnd();
 
                 }
             }
-        }.runTaskAsynchronously(NaaraHG.INSTANCE);
+        }.runTaskTimerAsynchronously(NaaraHG.INSTANCE, 0, 20);
     }
 
     /**
@@ -175,4 +177,7 @@ public class HGGame {
         getPlayers().forEach(player -> HGScoreboard.setProperScoreboard(player, type));
     }
 
+    public LocalDateTime getStartedAt() {
+        return startedAt;
+    }
 }

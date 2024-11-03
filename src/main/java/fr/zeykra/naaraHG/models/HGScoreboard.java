@@ -2,6 +2,9 @@ package fr.zeykra.naaraHG.models;
 
 import fr.zeykra.naaraHG.enums.HGScoreboardType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class HGScoreboard {
 
     public static void setProperScoreboard(HGPlayer player, HGScoreboardType type) {
@@ -18,6 +21,11 @@ public class HGScoreboard {
         }
     }
 
+    /**
+     * Generate endgame scoreboard
+     *
+     * @param hgPlayer
+     */
     private static void generateEndgameScoreboard(HGPlayer hgPlayer) {
         HGGame game = hgPlayer.getCurrentGame();
 
@@ -29,17 +37,29 @@ public class HGScoreboard {
         );
     }
 
+    /**
+     * Generate ingame scoreboard
+     *
+     * @param hgPlayer
+     */
     private static void generateIngameScoreboard(HGPlayer hgPlayer) {
         HGGame game = hgPlayer.getCurrentGame();
+        Duration time = Duration.between(game.getStartedAt(), LocalDateTime.now());
 
         hgPlayer.getBoard().updateTitle("§6§lNaaraHG " + game.getGameShortName());
         hgPlayer.getBoard().updateLines(
-                "§7Joueurs: §a0",
+                "§7Joueurs: §a" + game.getPlayers().size() + "/" + game.getMaxPlayers(),
+                "§7Temps: " + time.toMinutes() + "m " + time.toSecondsPart() + "s",
                 "§7Kill: 0" ,
                 "§7Killstreak: 0"
         );
     }
 
+    /**
+     * Generate waiting scoreboard
+     *
+     * @param hgPlayer
+     */
     private static void generateWaitingScoreboard(HGPlayer hgPlayer) {
         HGGame game = hgPlayer.getCurrentGame();
 

@@ -55,6 +55,12 @@ public class HGPlayerManger {
         HGPLayers.remove(player.getUniqueId());
     }
 
+    /**
+     * Function pour regénérer les données des joueurs
+     *
+     *
+     * @param hgPlayer
+     */
     public static void regenerateData() {
         if(Bukkit.getOnlinePlayers().isEmpty()) return;
 
