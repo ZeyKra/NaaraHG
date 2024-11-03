@@ -1,6 +1,7 @@
 package fr.zeykra.naaraHG.managers;
 
 import fr.zeykra.naaraHG.models.HGPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -52,5 +53,14 @@ public class HGPlayerManger {
      */
     public static void deleteHGPLayer(Player player) {
         HGPLayers.remove(player.getUniqueId());
+    }
+
+    public static void regenerateData() {
+        if(Bukkit.getOnlinePlayers().isEmpty()) return;
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            createHGPLayer(player);
+        }
+
     }
 }

@@ -2,7 +2,7 @@ package fr.zeykra.naaraHG.models;
 
 import fr.zeykra.naaraHG.NaaraHG;
 import fr.zeykra.naaraHG.enums.Gamestate;
-import fr.zeykra.naaraHG.managers.HGManager;
+import fr.zeykra.naaraHG.enums.HGScoreboardType;
 import fr.zeykra.naaraHG.managers.HGPlayerManger;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -43,7 +43,6 @@ public class HGGame {
                 if (getRemainingPlayers().size() >= 2) {
                     handleGameStart();
                     this.cancel();
-
                 }
             }
         }.runTaskAsynchronously(NaaraHG.INSTANCE);
@@ -83,7 +82,11 @@ public class HGGame {
      */
     public void addPlayer(Player player) {
         HGPlayer hgPlayer = HGPlayerManger.getHGPlayer(player);
+        hgPlayer.setCurrentHGGameUUID(this.gameUUID);
         this.players.put(player.getUniqueId(), hgPlayer);
+        // Va automatiquement mettre à jour le tableau de bord pour le joueur qui rejoin
+        // en meme temps que celui des autres
+        updateScoreboard(HGScoreboardType.WAITING_SCOREBOARD);
     }
 
     /**
@@ -95,6 +98,7 @@ public class HGGame {
      */
     public void removePlayer(Player player) {
         this.players.remove(player.getUniqueId());
+        updateScoreboard(HGScoreboardType.WAITING_SCOREBOARD);
     }
 
     public HashSet<HGPlayer> getPlayers() {
@@ -134,6 +138,7 @@ public class HGGame {
      * @Author : ssgadryan
      */
     public void broadcastMessage(String message) {
+        if (getPlayers().isEmpty()) return;
         getPlayers().forEach(player -> player.getPlayer().sendMessage(message));
     }
 
@@ -153,4 +158,21 @@ public class HGGame {
     public Gamestate getGamestate() {
         return gamestate;
     }
+
+    /**
+     * fonction afin d'avoir un nom plus court de l'uuid de la partie
+     *
+     * @return String
+     *
+     * @Author : ssgadryan
+     */
+    public String getGameShortName() {
+        return this.getGameUUID().toString().substring(0, 5);
+    }
+
+    public void updateScoreboard(HGScoreboardType type) {
+        if (getPlayers().isEmpty()) return;
+        getPlayers().forEach(player -> HGScoreboard.setProperScoreboard(player, type));
+    }
+
 }

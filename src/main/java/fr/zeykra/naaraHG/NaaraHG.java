@@ -3,6 +3,7 @@ package fr.zeykra.naaraHG;
 import fr.zeykra.naaraHG.commands.hungergame.CommandHungerGame;
 import fr.zeykra.naaraHG.enums.Yaml;
 import fr.zeykra.naaraHG.listeners.PlayerJoinListener;
+import fr.zeykra.naaraHG.managers.HGPlayerManger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NaaraHG extends JavaPlugin {
@@ -21,6 +22,8 @@ public final class NaaraHG extends JavaPlugin {
 
         //Chargement des commandes
         getCommand("hungergame").setExecutor(new CommandHungerGame());
+
+        HGPlayerManger.regenerateData();
     }
 
 

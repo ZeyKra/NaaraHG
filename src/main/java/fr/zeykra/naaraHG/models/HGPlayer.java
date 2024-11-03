@@ -1,6 +1,9 @@
 package fr.zeykra.naaraHG.models;
 
-import fr.mrmicky.fastboard.FastBoard;
+
+
+import fr.zeykra.fastboard.FastBoard;
+import fr.zeykra.naaraHG.managers.HGManager;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -29,9 +32,15 @@ public class HGPlayer {
         return CurrentHGGameUUID;
     }
 
+    public HGGame getCurrentGame() {
+        return HGManager.getHGGameByUUID(getCurrentHGGameUUID());
+    }
+
     public Player getPlayer() {
         return player;
     }
 
-
+    public FastBoard getBoard() {
+        return board;
+    }
 }
