@@ -23,6 +23,7 @@ public class HGGame {
     private BukkitTask gameRunnable;
     private UUID gameUUID;
     private int maxPlayers = 12;
+    private String worldName;
 
     /**
      * Initializing HGGame Object
@@ -180,4 +181,14 @@ public class HGGame {
     public LocalDateTime getStartedAt() {
         return startedAt;
     }
+
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
+    }
+
+    public String getWorldName() {
+        return worldName;
+    }
+
+
 }

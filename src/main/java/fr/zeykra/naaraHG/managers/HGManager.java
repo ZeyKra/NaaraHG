@@ -25,7 +25,9 @@ public class HGManager {
 
     public static HGGame createGame() {
         HGGame game = new HGGame();
+        game.setWorldName(HGWorldManager.getRandomAvailableWorld());
         addGame(game.getGameUUID(), game);
+
 
         return game;
     }

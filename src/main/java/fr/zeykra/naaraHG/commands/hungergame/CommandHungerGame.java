@@ -22,6 +22,7 @@ public class CommandHungerGame implements CommandExecutor  {
         subCommands.add(new SubCommandManage());
         subCommands.add(new SubCommandStart());
         subCommands.add(new SubCommandJoin());
+        subCommands.add(new SubCommandAddChest());
     }
 
     @Override

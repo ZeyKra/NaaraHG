@@ -3,8 +3,15 @@ package fr.zeykra.naaraHG;
 import fr.zeykra.naaraHG.commands.hungergame.CommandHungerGame;
 import fr.zeykra.naaraHG.enums.Yaml;
 import fr.zeykra.naaraHG.listeners.PlayerJoinListener;
+import fr.zeykra.naaraHG.managers.HGChestManager;
 import fr.zeykra.naaraHG.managers.HGPlayerManger;
+import fr.zeykra.naaraHG.managers.HGWorldManager;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class NaaraHG extends JavaPlugin {
 
@@ -24,6 +31,12 @@ public final class NaaraHG extends JavaPlugin {
         getCommand("hungergame").setExecutor(new CommandHungerGame());
 
         HGPlayerManger.regenerateData();
+        HGWorldManager.generateWorldList();
+        HGChestManager.regenerateChestContentList();
+        HGWorldManager.debugLog();
+
+        System.out.println("DEBUG: " + Bukkit.getWorlds().toString());
+
     }
 
 
