@@ -103,7 +103,6 @@ public enum Yaml {
      */
 
     //made by ZeyKra_
-
     YamlConfiguration ymlConfig;
 
     public void setConfigSection(String key) {
@@ -129,6 +128,38 @@ public enum Yaml {
             return configSection.getString(key);
         }
         return null;
+    }
+
+
+    public HashMap<String, String> getHashmap(ConfigurationSection configSection) {
+        HashMap<String, String> objectsHashmap = new HashMap<>();
+        if (ymlConfig.getKeys(false).isEmpty()) return objectsHashmap;
+
+        configSection.getKeys(false).forEach(k -> {
+            objectsHashmap.put(k, configSection.getString(k));
+        });
+        return objectsHashmap;
+    }
+
+    public HashMap<String, String> getHashmap(String configSectionkey) {
+        if (configSection == null) {
+            return getHashmap(ymlConfig.getConfigurationSection(configSectionkey));
+        }
+        // si ya deja un config section bah ça cherche la key dedans example pos1/player2
+        return getHashmap(configSection.getConfigurationSection(configSectionkey));
+    }
+
+    public void setHashmap(String key, HashMap<String, String> objectsHashmap) {
+        ConfigurationSection mapKey = ymlConfig.createSection(key);
+        objectsHashmap.forEach((k, v) -> {
+            mapKey.set(k, v);
+        });
+
+        try {
+            ymlConfig.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -225,6 +256,8 @@ public enum Yaml {
             e.printStackTrace();
         }
     }
+
+
 
 
     public void setLocDirection(String configSectionkey, Location loc) {
