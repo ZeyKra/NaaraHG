@@ -3,11 +3,13 @@ package fr.zeykra.naaraHG.models;
 import fr.zeykra.naaraHG.NaaraHG;
 import fr.zeykra.naaraHG.enums.Gamestate;
 import fr.zeykra.naaraHG.enums.HGScoreboardType;
+import fr.zeykra.naaraHG.managers.HGBorderManager;
 import fr.zeykra.naaraHG.managers.HGPlayerManger;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -41,7 +43,7 @@ public class HGGame {
         this.gameRunnable = new BukkitRunnable() {
             @Override
             public void run() {
-                if (getRemainingPlayers().size() >= 2) {
+                if (getRemainingPlayers().size() >= 1) {
                     handleGameStart();
                     this.cancel();
                 }
@@ -62,11 +64,13 @@ public class HGGame {
      * @Author : ssgadryan
      */
     private void start() {
+        HGGame currentGame = this;
         this.gameRunnable = new BukkitRunnable() {
             @Override
             public void run() {
 
                 updateScoreboard(HGScoreboardType.INGAME_SCOREBOARD);
+                HGBorderManager.updateBordersizeAnimated(currentGame);
                 if (getRemainingPlayers().size() <= 1) {
                     gamestate = Gamestate.FINISHED;
                     handleGameEnd();
@@ -190,5 +194,7 @@ public class HGGame {
         return worldName;
     }
 
-
+    public Duration getTimeElapsed() {
+        return Duration.between(this.getStartedAt(), LocalDateTime.now());
+    }
 }
