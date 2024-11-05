@@ -1,18 +1,19 @@
 package fr.zeykra.naaraHG.managers;
 
-import fr.zeykra.naaraHG.enums.WorldState;
 import fr.zeykra.naaraHG.enums.Yaml;
 import fr.zeykra.naaraHG.utils.BukkitSerialization;
 import fr.zeykra.naaraHG.utils.Cuboid;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class HGChestManager {
 
@@ -48,37 +49,31 @@ public class HGChestManager {
         return ChestContentList.get(Integer.toString(randomIndex));
     }
 
-
     public static void randomFillChest(String world) {
-        Location worldCenter = Bukkit.getServer().getWorld(world).getSpawnLocation();
-        Cuboid cuboid = new Cuboid(worldCenter.clone().add(-500, 0, -500), worldCenter.clone().add(500, 0, 500));
+        getChunksAroundCenter(world).forEach(chunk -> {
+            for(BlockState blockState : chunk.getTileEntities()) {
+                if (!(blockState instanceof Chest)) continue;
+                Chest chest = (Chest) blockState;
 
-        Bukkit.getServer().broadcastMessage("DEBUG: worldCenter" + worldCenter.toString());
-        Bukkit.getServer().broadcastMessage("DEBUG: Cuboid Size" + cuboid.getBlocks().size());
-        //Bukkit.getServer().broadcastMessage("DEBUG: Cuboid" + cuboid.getBlocks().size());
+                // for debug
+                //Bukkit.getServer().getWorld(world).spawnEntity(chest.getLocation().clone().add(0, 1, 0), EntityType.ARMOR_STAND);
+                //Bukkit.getServer().broadcastMessage("DEBUG: " + chest.getLocation().toString() + " " + chest.getBlock().getType().toString());
 
-        for (Block block : cuboid) {
-            if (block.getType() != Material.AIR) {
-                Bukkit.getServer().broadcastMessage("DEBUG: " + block.getLocation().toString() + " " + block.getType().toString());
-            }
-        }
-
-        /*
-        cuboid.getBlocks().forEach(block -> {
-            if (block.getType() != Material.AIR) {
-                //Chest chest = (Chest) block.getState();
-                Bukkit.getServer().broadcastMessage("DEBUG: " + block.getLocation().toString() + " " + block.getType().toString());
-                /*
                 try {
-                    Bukkit.getServer().broadcastMessage("DEBUG: Cuboid Size" + cuboid.getBlocks().size());
-                    Bukkit.getServer().broadcastMessage("DEBUG: " + chest.getLocation().toString());
                     chest.getInventory().setContents(BukkitSerialization.itemStackArrayFromBase64(getRandomChestContent()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-        })
-        */
+        });
+    }
+
+    private static List<Chunk> getChunksAroundCenter(String world) {
+        Location worldCenter = Bukkit.getServer().getWorld(world).getSpawnLocation();
+        Cuboid cuboid = new Cuboid(worldCenter.clone().add(-500, -100, -500), worldCenter.clone().add(500, 100, 500));
+        cuboid.getCenter().getBlock().setType(Material.DIAMOND_BLOCK);
+
+        return cuboid.getChunks();
     }
 
 
