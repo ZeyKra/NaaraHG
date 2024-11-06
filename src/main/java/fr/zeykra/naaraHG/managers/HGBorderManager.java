@@ -21,23 +21,27 @@ public class HGBorderManager {
         Bukkit.getServer().getWorld(worldName).getWorldBorder().setSize(size);
     }
 
+    public static void resetBorderSize(String worldName) {
+        Bukkit.getServer().getWorld(worldName).getWorldBorder().setSize(162, 1);
+    }
+
     public static void updateBordersizeAnimated(HGGame game) {
         //System.out.println(game.getWorldName());
         switch ((int) game.getTimeElapsed().toSeconds()) {
             case 10:
-                animateBorderSize(game.getWorldName(), 800);
+                animateBorderSize(game.getWorldName(), 120);
                 break;
             case 20:
-                animateBorderSize(game.getWorldName(), 600);
+                animateBorderSize(game.getWorldName(), 80);
                 break;
             case 30:
-                animateBorderSize(game.getWorldName(), 400);
+                animateBorderSize(game.getWorldName(), 20);
                 break;
         }
     }
 
     private static void animateBorderSize(String worldName, int size) {
-        Bukkit.getServer().getWorld(worldName).getWorldBorder().setSize(size, 60);
+        Bukkit.getServer().getWorld(worldName).getWorldBorder().setSize(size, 2);
     }
 
 }

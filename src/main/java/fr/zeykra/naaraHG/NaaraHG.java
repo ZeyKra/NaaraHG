@@ -3,6 +3,7 @@ package fr.zeykra.naaraHG;
 import fr.zeykra.naaraHG.commands.hungergame.CommandHungerGame;
 import fr.zeykra.naaraHG.enums.Yaml;
 import fr.zeykra.naaraHG.listeners.PlayerJoinListener;
+import fr.zeykra.naaraHG.managers.HGBorderManager;
 import fr.zeykra.naaraHG.managers.HGChestManager;
 import fr.zeykra.naaraHG.managers.HGPlayerManger;
 import fr.zeykra.naaraHG.managers.HGWorldManager;
@@ -33,7 +34,7 @@ public final class NaaraHG extends JavaPlugin {
         HGPlayerManger.regenerateData();
         HGWorldManager.generateWorldList();
         HGChestManager.regenerateChestContentList();
-        HGWorldManager.debugLog();
+        HGBorderManager.generateBorderSetting();
 
         System.out.println("DEBUG: " + Bukkit.getWorlds().toString());
 

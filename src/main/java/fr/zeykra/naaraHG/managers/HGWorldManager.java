@@ -14,7 +14,6 @@ public class HGWorldManager {
 
     public static Map<String, HGWorld> HGWorldList = new HashMap<>();
 
-
     public static void generateWorldList() {
         /*  Va a la section des mondes dans le fichier de configuration yml
             world:
@@ -23,10 +22,10 @@ public class HGWorldManager {
         ConfigurationSection worldKey = Yaml.CONFIG.configSection;
 
         worldKey.getKeys(false).forEach(worldName -> {
-            System.out.println("DEBUG: " + worldName);
             HGWorld hgWorld = new HGWorld(worldName, WorldState.FREE);
             hgWorld.generateSpawningLocationsList();
-            hgWorld.DebugLocations();
+            HGBorderManager.resetBorderSize(worldName);
+            hgWorld.DebugLocations(); // INFO: Fonction de debug
             HGWorldList.put(worldName, hgWorld);
         });
         Yaml.CONFIG.resetConfigSection();

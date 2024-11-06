@@ -4,7 +4,11 @@ import fr.zeykra.naaraHG.NaaraHG;
 import fr.zeykra.naaraHG.enums.Gamestate;
 import fr.zeykra.naaraHG.enums.HGScoreboardType;
 import fr.zeykra.naaraHG.managers.HGBorderManager;
+import fr.zeykra.naaraHG.managers.HGManager;
 import fr.zeykra.naaraHG.managers.HGPlayerManger;
+import fr.zeykra.naaraHG.managers.HGWorldManager;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -39,7 +43,9 @@ public class HGGame {
     }
 
     public void startWait() {
+        this.worldName = HGWorldManager.getRandomAvailableWorld();
         this.gamestate = Gamestate.WAITING;
+
         this.gameRunnable = new BukkitRunnable() {
             @Override
             public void run() {
@@ -74,7 +80,6 @@ public class HGGame {
                 if (getRemainingPlayers().size() <= 1) {
                     gamestate = Gamestate.FINISHED;
                     handleGameEnd();
-
                 }
             }
         }.runTaskTimerAsynchronously(NaaraHG.INSTANCE, 0, 20);
@@ -91,9 +96,13 @@ public class HGGame {
         HGPlayer hgPlayer = HGPlayerManger.getHGPlayer(player);
         hgPlayer.setCurrentHGGameUUID(this.gameUUID);
         this.players.put(player.getUniqueId(), hgPlayer);
+
+        Location lobbyLocation = Bukkit.getWorld(HGManager.getHGGameByUUID(this.gameUUID).getWorldName()).getSpawnLocation();
+        player.teleport(lobbyLocation);
         // Va automatiquement mettre à jour le tableau de bord pour le joueur qui rejoin
         // en meme temps que celui des autres
         updateScoreboard(HGScoreboardType.WAITING_SCOREBOARD);
+        this.broadcastMessage("§e" + player.getName() + " §7a rejoint la partie §e" + this.getGameShortName()+ " §7(" + this.getPlayers().size() + "/" + this.getMaxPlayers() + ")");
     }
 
     /**
@@ -106,6 +115,7 @@ public class HGGame {
     public void removePlayer(Player player) {
         this.players.remove(player.getUniqueId());
         updateScoreboard(HGScoreboardType.WAITING_SCOREBOARD);
+        this.broadcastMessage("§e" + player.getName() + " §7a quitté la partie §e" + this.getGameShortName() + " §7(" + this.getPlayers().size() + "/" + this.getMaxPlayers() + ")");
     }
 
     public HashSet<HGPlayer> getPlayers() {

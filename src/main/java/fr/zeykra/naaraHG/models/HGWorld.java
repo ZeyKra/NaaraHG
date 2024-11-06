@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HGWorld {
@@ -17,6 +18,7 @@ public class HGWorld {
     public HGWorld(String worldName, WorldState state) {
         this.worldName = worldName;
         this.state = state;
+        this.spawningLocations = new ArrayList<>();
     }
 
     public String getWorldName() {
@@ -36,26 +38,29 @@ public class HGWorld {
     }
 
     public void generateSpawningLocationsList() {
-        Yaml.CONFIG.setConfigSection("worlds." + this.worldName);
+        Yaml.CONFIG.setConfigSection("worlds");
+        //System.out.println(Yaml.CONFIG.configSection.getConfigurationSection(this.worldName).getConfigurationSection("1").get("x"));
         ConfigurationSection worldKey = Yaml.CONFIG.getConfigSection();
-        System.out.println("DEBUG: " + worldKey.getKeys(false).toString());
-        for(int index = 0; index < worldKey.getKeys(false).size(); index++) {
-            Location loc = Yaml.CONFIG.getLocWithDirection("worlds." + this.worldName + "." + String.valueOf(index));
-            System.out.println("DEBUG: " + loc.toString());
+        //System.out.println("DEBUG: " + worldKey.getKeys(false).toString());
+
+        worldKey.getConfigurationSection(this.worldName).getKeys(false).forEach(key -> {
+            Location loc = Yaml.CONFIG.getLocWithDirection(this.worldName + "." + key);
+            //System.out.println("DEBUG: " + this.worldName + " " +  key + " loc! " + loc.toString());
+
+            spawningLocations.add(loc);
+        });
 
 
-            //spawningLocations.add();
-        }
         Yaml.CONFIG.resetConfigSection();
     }
 
     public void DebugLocations() {
-        Bukkit.getServer().broadcastMessage("DEBUG: HGWorld");
-        Bukkit.getServer().broadcastMessage("--------------------");
+        System.out.println("DEBUG: HGWorld " + this.worldName);
+        System.out.println("--------------------");
         for(Location location : spawningLocations) {
-            Bukkit.getServer().broadcastMessage(location.toString());
+            System.out.println(location.toString());
         }
-        Bukkit.getServer().broadcastMessage("--------------------");
+        System.out.println("--------------------");
     }
 
 }

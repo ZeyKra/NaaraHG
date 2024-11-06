@@ -1,33 +1,61 @@
 worlds:
-    world:
+    hunger1:
       1:
-        world: world
-        x: 0
-        y: 64
+        world: hunger1
+        x: 9
+        y: 66
         z: 0
-        yaw: 0
+        yaw: 90
         pitch: 0
       2:
-        world: world
-        x: 0
-        y: 64
+        world: hunger1
+        x: -9
+        y: 66
         z: 0
+        yaw: -90
+        pitch: 0
+      3:
+        world: hunger1
+        x: 0
+        y: 66
+        z: -9
         yaw: 0
         pitch: 0
-    hungergame:
-      1:
-        world: hungergame
+      4:
+        world: hunger1
         x: 0
-        y: 64
+        y: 66
+        z: 9
+        yaw: 180
+        pitch: 0
+    hunger2:
+      1:
+        world: hunger2
+        x: 9
+        y: 66
         z: 0
-        yaw: 0
+        yaw: 90
         pitch: 0
       2:
-        world: hungergame
-        x: 0
-        y: 64
+        world: hunger2
+        x: -9
+        y: 66
         z: 0
+        yaw: -90
+        pitch: 0
+      3:
+        world: hunger2
+        x: 0
+        y: 66
+        z: -9
         yaw: 0
+        pitch: 0
+      4:
+        world: hunger2
+        x: 0
+        y: 66
+        z: 9
+        yaw: 180
         pitch: 0
 
 chest:

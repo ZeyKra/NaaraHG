@@ -65,6 +65,5 @@ public class SubCommandJoin extends SubCommand {
 
         HGGame game = HGManager.getHGGameByUUID(uuid);
         game.addPlayer(player);
-        game.broadcastMessage("§e" + player.getName() + " §7a rejoint la partie §e" + game.getGameUUID() + " §7(" + game.getPlayers().size() + "/" + game.getMaxPlayers() + ")");
     }
 }
