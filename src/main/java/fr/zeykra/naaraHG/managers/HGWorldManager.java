@@ -2,6 +2,7 @@ package fr.zeykra.naaraHG.managers;
 
 import fr.zeykra.naaraHG.enums.WorldState;
 import fr.zeykra.naaraHG.enums.Yaml;
+import fr.zeykra.naaraHG.models.HGWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -11,15 +12,8 @@ import java.util.Map;
 
 public class HGWorldManager {
 
-    public static Map<String, WorldState> HGWorldList = new HashMap<>();
+    public static Map<String, HGWorld> HGWorldList = new HashMap<>();
 
-    public static WorldState getWorldState(String worldName) {
-        return HGWorldList.get(worldName);
-    }
-
-    public static void setWordState(String worldName, WorldState state) {
-        HGWorldList.put(worldName, state);
-    }
 
     public static void generateWorldList() {
         /*  Va a la section des mondes dans le fichier de configuration yml
@@ -29,7 +23,11 @@ public class HGWorldManager {
         ConfigurationSection worldKey = Yaml.CONFIG.configSection;
 
         worldKey.getKeys(false).forEach(worldName -> {
-            HGWorldList.put(worldName, WorldState.FREE);
+            System.out.println("DEBUG: " + worldName);
+            HGWorld hgWorld = new HGWorld(worldName, WorldState.FREE);
+            hgWorld.generateSpawningLocationsList();
+            hgWorld.DebugLocations();
+            HGWorldList.put(worldName, hgWorld);
         });
         Yaml.CONFIG.resetConfigSection();
     }
@@ -57,8 +55,8 @@ public class HGWorldManager {
     private static ArrayList<String> getAvaibleWorlds() {
         ArrayList<String> availableWorlds = new ArrayList<>();
 
-        HGWorldList.forEach((worldName, state) -> {
-            if (state == WorldState.FREE) availableWorlds.add(worldName);
+        HGWorldList.forEach((worldName, hgWorld) -> {
+            if (hgWorld.getState() == WorldState.FREE) availableWorlds.add(worldName);
         });
 
         return availableWorlds;
