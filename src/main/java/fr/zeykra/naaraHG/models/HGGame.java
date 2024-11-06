@@ -3,10 +3,7 @@ package fr.zeykra.naaraHG.models;
 import fr.zeykra.naaraHG.NaaraHG;
 import fr.zeykra.naaraHG.enums.Gamestate;
 import fr.zeykra.naaraHG.enums.HGScoreboardType;
-import fr.zeykra.naaraHG.managers.HGBorderManager;
-import fr.zeykra.naaraHG.managers.HGManager;
-import fr.zeykra.naaraHG.managers.HGPlayerManger;
-import fr.zeykra.naaraHG.managers.HGWorldManager;
+import fr.zeykra.naaraHG.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -74,6 +71,7 @@ public class HGGame {
         this.gameRunnable = new BukkitRunnable() {
             @Override
             public void run() {
+                HGChestManager.randomFillChest(currentGame.getWorldName());
 
                 updateScoreboard(HGScoreboardType.INGAME_SCOREBOARD);
                 HGBorderManager.updateBordersizeAnimated(currentGame);

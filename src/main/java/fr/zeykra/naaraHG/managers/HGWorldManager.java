@@ -25,7 +25,7 @@ public class HGWorldManager {
             HGWorld hgWorld = new HGWorld(worldName, WorldState.FREE);
             hgWorld.generateSpawningLocationsList();
             HGBorderManager.resetBorderSize(worldName);
-            hgWorld.DebugLocations(); // INFO: Fonction de debug
+            hgWorld.debugLocations(); // INFO: Fonction de debug
             HGWorldList.put(worldName, hgWorld);
         });
         Yaml.CONFIG.resetConfigSection();
@@ -61,5 +61,8 @@ public class HGWorldManager {
         return availableWorlds;
     }
 
+    public static HGWorld getHGWorldByName(String worldName) {
+        return HGWorldList.get(worldName);
+    }
 
 }

@@ -1,5 +1,6 @@
 package fr.zeykra.naaraHG.managers;
 
+import fr.zeykra.naaraHG.NaaraHG;
 import fr.zeykra.naaraHG.enums.Yaml;
 import fr.zeykra.naaraHG.utils.BukkitSerialization;
 import fr.zeykra.naaraHG.utils.Cuboid;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HGChestManager {
-
 
     public static HashMap<String, String> ChestContentList = new HashMap<>();
 
@@ -67,6 +67,7 @@ public class HGChestManager {
             }
         });
     }
+
 
     private static List<Chunk> getChunksAroundCenter(String world) {
         Location worldCenter = Bukkit.getServer().getWorld(world).getSpawnLocation();
